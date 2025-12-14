@@ -76,7 +76,7 @@ export default function FlyingCherubs() {
       endX,
       endY,
       duration: Math.random() * 10 + 12, // 12-22 seconds for smoother motion
-      size: Math.random() * 1000 + 100, // 100-1100px
+      size: Math.random() * 200 + 100, // 100-1100px
       rotation: Math.random() * 30 - 15, // -15 to 15 degrees
       delay: 0,
       createdAt: Date.now()

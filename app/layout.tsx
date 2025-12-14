@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Choose Your Adventure",
-  description: "An interactive choose-your-own-adventure story",
+  title: "WWWWWWWW.LOVE",
+  description: "WILD-WIGGILING-WEST-WIRGINIA WEDDING-WEEKEND-WINGDING & WHOOP-DE-DOO",
 };
 
 export default function RootLayout({

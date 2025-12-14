@@ -37,6 +37,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Hide scrollbars while maintaining scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /* Cloud animations - back and forth motion using transform */
 @keyframes float-clouds-slow {
   0% {
@@ -154,12 +164,13 @@ body {
   color: #000000;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font-size: 1.5rem; /* 18px */
+  font-family: 'Avenir Next', Helvetica, Arial, sans-serif;
 }
 
 .wedding-text {
   color: #000000;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-  font-size: 1.15rem; /* 17px */
+  font-family: 'Avenir Next', Helvetica, Arial, sans-serif;
 }
 
 .wild-wiggle {
@@ -193,13 +204,13 @@ body {
   text-decoration: none;
   display: inline-flex;
   transition: all 0.3s ease;
-  height: 65px;
+  height: 80px;
   width: auto;
-  min-width: 200px;
-  max-width: 400px;
+  min-width: 300px;
   align-items: center;
   justify-content: center;
   text-align: center;
+  font-family: 'Avenir Next', Helvetica, Arial, sans-serif;
 }
 
 .cloud-button:hover {
@@ -209,18 +220,84 @@ body {
 
 /* Vignette fade to white effect */
 .vignette-fade {
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, 
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at center, 
     rgba(0, 0, 0, 1) 0%, 
-    rgba(0, 0, 0, 0.9) 20%, 
-    rgba(0, 0, 0, 0.5) 40%, 
-    rgba(0, 0, 0, 0.2) 60%,
-    rgba(0, 0, 0, 0.05) 75%,
-    rgba(0, 0, 0, 0) 85%);
-  mask-image: radial-gradient(ellipse 70% 60% at center, 
+    rgba(0, 0, 0, 0.95) 30%, 
+    rgba(0, 0, 0, 0.6) 50%, 
+    rgba(0, 0, 0, 0.3) 65%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0) 90%);
+  mask-image: radial-gradient(ellipse 75% 65% at center, 
     rgba(0, 0, 0, 1) 0%, 
-    rgba(0, 0, 0, 0.9) 20%, 
-    rgba(0, 0, 0, 0.5) 40%, 
-    rgba(0, 0, 0, 0.2) 60%,
-    rgba(0, 0, 0, 0.05) 75%,
-    rgba(0, 0, 0, 0) 85%);
+    rgba(0, 0, 0, 0.95) 30%, 
+    rgba(0, 0, 0, 0.6) 50%, 
+    rgba(0, 0, 0, 0.3) 65%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0) 90%);
 }
+
+/* Curtain animations */
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.curtain-intro-container {
+  position: relative;
+  width: 100%;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+
+.curtain-intro-container.hiding {
+  animation: fade-out 0.5s ease-out forwards;
+}
+
+.curtain-left {
+  position: absolute;
+  left: 0;
+  width: 70%;
+  object-fit: cover;
+  object-position: right center;
+  z-index: 10;
+  transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.curtain-right {
+  position: absolute;
+  right: 0;
+  width: 70%;
+  object-fit: cover;
+  object-position: left center;
+  z-index: 10;
+  transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.curtain-left.open {
+  transform: translateX(-100%);
+}
+
+.curtain-right.open {
+  transform: translateX(100%);
+}
+
+.curtain-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
