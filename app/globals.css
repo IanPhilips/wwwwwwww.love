@@ -208,6 +208,7 @@ body {
   width: auto;
   min-width: 300px;
   align-items: center;
+  cursor: pointer;
   justify-content: center;
   text-align: center;
   font-family: 'Avenir Next', Helvetica, Arial, sans-serif;
