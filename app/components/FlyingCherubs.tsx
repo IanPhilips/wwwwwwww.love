@@ -111,6 +111,11 @@ export default function FlyingCherubs() {
   };
 
   const handleCherubClick = (cherubId: number, element: HTMLDivElement) => {
+    // Play random giggle sound
+    const giggleSounds = ['/giggle.ogg', '/giggle2.wav', '/giggle3.wav', '/scream.mp3'];
+    const audio = new Audio(giggleSounds[Math.floor(Math.random() * giggleSounds.length)]);
+    audio.play().catch(() => {}); // Ignore errors if audio can't play
+    
     // Get the current position from the element's bounding rect
     const rect = element.getBoundingClientRect();
     const currentX = (rect.left / window.innerWidth) * 100;
