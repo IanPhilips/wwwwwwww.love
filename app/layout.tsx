@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WWWWWWWW.LOVE",
-  description: "WILD-WIGGILING-WEST-WIRGINIA WEDDING-WEEKEND-WINGDING & WHOOP-DE-DOO",
+  title: "WILD-WIGGILING-WEST-WIRGINIA WEDDING-WEEKEND-WINGDING & WHOOP-DE-DOO",
+  description: "wwwwwwww.love",
 };
 
 export default function RootLayout({

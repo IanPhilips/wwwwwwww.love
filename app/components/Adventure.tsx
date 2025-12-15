@@ -1,10 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { START_NODE_ID, STORY_NODES } from '../story-data';
 import { GameState } from '../types';
 import FlyingCherubs from './FlyingCherubs';
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 const LOCAL_STORAGE_KEY = 'adventure-game-state';
 
@@ -45,6 +55,10 @@ export default function Adventure() {
         // Validate that the saved node still exists in the story
         if (STORY_NODES[parsed.currentNodeId]) {
           setGameState(parsed);
+          // Skip intro if already at an ending
+          if (STORY_NODES[parsed.currentNodeId].isEnd) {
+            setShowIntro(false);
+          }
         } else {
           // Node doesn't exist (story changed), reset to start
           localStorage.removeItem(LOCAL_STORAGE_KEY);
@@ -63,6 +77,14 @@ export default function Adventure() {
   }, [gameState, isClient]);
 
   const currentNode = STORY_NODES[gameState.currentNodeId];
+  
+  // Shuffle choices each time the node changes
+  const shuffledChoices = useMemo(() => {
+    if (currentNode?.choices) {
+      return shuffleArray(currentNode.choices);
+    }
+    return [];
+  }, [gameState.currentNodeId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChoice = (nextNodeId: string) => {
     const nextNode = STORY_NODES[nextNodeId];
@@ -170,7 +192,7 @@ export default function Adventure() {
               onClick={handleSkipToEnd}
               className="cloud-button !min-w-[200px] text-sm mx-auto"
             >
-              Skip to Ending
+              Skip to End
             </button>
           )}
         </div>
@@ -203,7 +225,7 @@ export default function Adventure() {
               {/* Content behind curtains */}
               <div className="w-full h-full flex flex-col mb-40 sm:mb-0 items-center justify-center text-center z-0">
                 <h1 className="wedding-text text-2xl sm:text-3xl">a love story</h1>
-                <p className="wedding-text text-lg sm:text-xl">by nicholas lee</p>
+                <p className="wedding-text text-lg sm:text-xl">by keone</p>
               </div>
             </div>
           ) : (
@@ -273,21 +295,21 @@ export default function Adventure() {
                 
                 <div>
                   <p className="font-semibold wedding-heading">Friday Daytime</p>
-                  <p className="italic">Hiking, Swimming</p>
+                  <p className="italic">Hiking, River Rattin'</p>
                   <p className="font-semibold wedding-heading mt-2">Friday Evening ~ <span className="font-normal">6:00 P.M.</span></p>
-                  <p className="italic">*Dinner & Group Talent Show*</p>
+                  <p className="italic">Dinner & Talent Show</p>
                   <p>
-                    All talents, all levels! We will provide a variety of musical instruments.</p>
+                    Songs, jokin', magic, tricks! We'll provide a variety of musical instruments.</p>
                   <p>Conference Center at Blackwater Falls Lodge</p>
                 </div>
                 
                 <div>
                   <p className="font-semibold wedding-heading">Saturday Daytime</p>
-                  <p className="italic">Brunch, Hiking, Swimming</p>
+                  <p className="italic">Brunch, Hiking, Hog waterin'</p>
                   <p className="font-semibold wedding-heading mt-2">Saturday Evening ~ <span className="font-normal">5:00 P.M.</span></p>
-                  <p className="italic">*Group Photo, Dinner, Roast & Toast, Dancing*</p>
+                  <p className="italic">Group Photo, Dinner, Roast & Toast, Wigglin'</p>
                   <p>
-                    Open floor for roasts & toasts!</p>
+                    Roast 'em, toast 'em, put 'em in a stew! Roast us or toast us.</p>
                   <p>Conference Center at Blackwater Falls Lodge</p>
                 </div>
                 
@@ -458,15 +480,15 @@ export default function Adventure() {
           )}
           
           {/* Choices */}
-          {!showIntro && currentNode.choices && currentNode.choices.length > 0 && (
-            <div className="gap-2 items-center justify-center flex-col sm:flex-row sm:flex-wrap mt-6 w-full flex">
-              {currentNode.choices.map((choice, index) => (
+          {!showIntro && shuffledChoices.length > 0 && (
+            <div className="items-center justify-center flex-col sm:flex-row sm:flex-wrap mt-4 w-full flex">
+              {shuffledChoices.map((choice, index) => (
                 <button
-                  key={index}
+                  key={choice.nextNodeId}
                   onClick={() => handleChoice(choice.nextNodeId)}
-                  className="cloud-button !w-[400px]"
+                  className="cloud-button !w-[400px] !h-[100px]"
                 >
-                  <span className="font-medium">{choice.text}</span>
+                  <span className="max-w-[250px] mt-2">{choice.text}</span>
                 </button>
               ))}
             </div>

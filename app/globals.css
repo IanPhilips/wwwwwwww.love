@@ -10,6 +10,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Cloudy';
+  src: url('/fonts/cloudy.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --background: #ffffff;
@@ -199,8 +206,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   border: none;
-  color: #000000;
-  font-weight: 600;
+  color: #416fdb;
   text-decoration: none;
   display: inline-flex;
   transition: all 0.3s ease;
@@ -211,7 +217,7 @@ body {
   cursor: pointer;
   justify-content: center;
   text-align: center;
-  font-family: 'Avenir Next', Helvetica, Arial, sans-serif;
+  font-family: 'Cloudy', Helvetica, Arial, sans-serif;
 }
 
 .cloud-button:hover {
