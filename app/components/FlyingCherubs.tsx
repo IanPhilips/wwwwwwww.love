@@ -14,6 +14,7 @@ interface Cherub {
   rotation: number;
   delay: number;
   createdAt: number; // timestamp when cherub was created
+  clickCount: number; // track how many times this cherub has been clicked
 }
 
 const CHERUB_IMAGES = ['/c1.png', '/c2.png', '/c3.png', '/c4.png', '/c5.png', '/c6.png', '/c7.png'];
@@ -79,8 +80,66 @@ export default function FlyingCherubs() {
       size: Math.random() * 200 + 100, // 100-1100px
       rotation: Math.random() * 30 - 15, // -15 to 15 degrees
       delay: 0,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      clickCount: 0
     };
+  };
+
+  const getRandomOffscreenPosition = () => {
+    const side = Math.floor(Math.random() * 4);
+    let x: number, y: number;
+    switch (side) {
+      case 0: // top
+        x = Math.random() * 100;
+        y = -100;
+        break;
+      case 1: // right
+        x = 200;
+        y = Math.random() * 100;
+        break;
+      case 2: // bottom
+        x = Math.random() * 100;
+        y = 200;
+        break;
+      case 3: // left
+      default:
+        x = -100;
+        y = Math.random() * 100;
+        break;
+    }
+    return { x, y };
+  };
+
+  const handleCherubClick = (cherubId: number, element: HTMLDivElement) => {
+    // Get the current position from the element's bounding rect
+    const rect = element.getBoundingClientRect();
+    const currentX = (rect.left / window.innerWidth) * 100;
+    const currentY = (rect.top / window.innerHeight) * 100;
+    
+    // Get a new random offscreen destination
+    const newEnd = getRandomOffscreenPosition();
+    
+    setCherubs(prev => prev.map(c => {
+      if (c.id !== cherubId) return c;
+      
+      const newClickCount = c.clickCount + 1;
+      // Speed up: reduce duration by 40% each click, minimum 2 seconds
+      const newDuration = Math.max(2, c.duration * 0.6);
+      
+      return {
+        ...c,
+        startX: currentX,
+        startY: currentY,
+        endX: newEnd.x,
+        endY: newEnd.y,
+        duration: newDuration,
+        delay: 0,
+        createdAt: Date.now(),
+        clickCount: newClickCount,
+        // Add some spin on click
+        rotation: c.rotation + (Math.random() > 0.5 ? 30 : -30)
+      };
+    }));
   };
 
   useEffect(() => {
@@ -92,6 +151,7 @@ export default function FlyingCherubs() {
       cherub.id = i;
       cherub.delay = i * 3; // Stagger initial cherubs by 3 seconds each
       cherub.createdAt = now;
+      cherub.clickCount = 0;
       initialCherubs.push(cherub);
     }
     setCherubs(initialCherubs);
@@ -127,8 +187,9 @@ export default function FlyingCherubs() {
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 6 }}>
       {cherubs.map(cherub => (
         <div
-          key={cherub.id}
+          key={`${cherub.id}-${cherub.clickCount}`}
           className="flying-cherub"
+          onClick={(e) => handleCherubClick(cherub.id, e.currentTarget)}
           style={{
             position: 'absolute',
             left: `${cherub.startX}vw`,
@@ -136,12 +197,15 @@ export default function FlyingCherubs() {
             width: `${cherub.size}px`,
             height: `${cherub.size}px`,
             willChange: 'left, top',
-            animationName: `fly-${cherub.id}`,
+            animationName: `fly-${cherub.id}-${cherub.clickCount}`,
             animationDuration: `${cherub.duration}s`,
             animationTimingFunction: 'linear',
             animationDelay: `${cherub.delay}s`,
             animationFillMode: 'forwards',
             transform: `rotate(${cherub.rotation}deg)`,
+            pointerEvents: 'auto',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease-out',
           }}
         >
           <img
@@ -155,7 +219,7 @@ export default function FlyingCherubs() {
             }}
           />
           <style jsx>{`
-            @keyframes fly-${cherub.id} {
+            @keyframes fly-${cherub.id}-${cherub.clickCount} {
               0% {
                 left: ${cherub.startX}vw;
                 top: ${cherub.startY}vh;
