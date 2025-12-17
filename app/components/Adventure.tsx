@@ -403,7 +403,7 @@ export default function Adventure() {
                   You are also welcome to handle your own lodging!
                 </p>
                   
-              <div className="flex justify-start gap-3 mt-4">
+              <div className="flex justify-start flex-wrap gap-3 mt-4">
                 <a 
                   href="https://wvstateparks.com/park/blackwater-falls-state-park/" 
                   target="_blank" 
