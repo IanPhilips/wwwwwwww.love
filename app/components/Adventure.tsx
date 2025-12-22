@@ -248,9 +248,9 @@ export default function Adventure() {
               {/* Date & Location */}
               <div className="text-center">
               <Image 
-                src="/header.jpg" 
-                width={1250}
-                height={850}
+                src="/high-res-header.jpeg" 
+                width={900}
+                height={600}
                 alt="Header" 
                 className="w-full mb-2"
               />
