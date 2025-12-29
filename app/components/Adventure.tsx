@@ -292,7 +292,7 @@ export default function Adventure() {
                   className="w-full vignette-fade object-fill"
                 />
                 <figcaption className="text-center mt-2">
-                  <span className="wedding-text">water falling hard at </span>
+                  <span className="wedding-text text-sm">water falling hard at </span>
                   <a 
                     href="https://wvstateparks.com/parks/blackwater-falls-state-park/" 
                     target="_blank" 
