@@ -224,7 +224,7 @@ export default function Adventure() {
               
               {/* Content behind curtains */}
               <div className="w-full h-full flex flex-col mb-40 sm:mb-0 items-center justify-center text-center z-0">
-                <h1 className="wedding-text text-2xl sm:text-3xl">a love story</h1>
+                <h1 className="wedding-text text-2xl sm:text-3xl">a story</h1>
                 <p className="wedding-text text-lg sm:text-xl">by keone</p>
               </div>
             </div>
@@ -257,33 +257,56 @@ export default function Adventure() {
                 
                 {/* Scroll indicator */}
                 <div className="flex flex-col items-center mb-4 ">
-                  <span className="text-2xl text-black">↓</span>
+                  <span className="text-2xl text-black sm:hidden">↓</span>
                 </div>
-
-                <a 
-                  href="https://wvstateparks.com/parks/blackwater-falls-state-park/lodging/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="cloud-button my-2 !h-[100px] sm:!w-[400px]"
-                >
-                  Blackwater Falls State Park
-                </a>
-                <p className="wedding-text font-bold mb-2">August 20-23, 2026</p>
+               
+                <p className="wedding-text font-bold mb-2 mt-4">August 20-23, 2026</p>
                 <p className="wedding-text">
                   1584 Blackwater Lodge Rd<br />
-                  Davis, West Virginia 26260
+                  Davis, West Virginia 26260 <br />
+                  at {' '}
+                  <a 
+                    href="https://wvstateparks.com/parks/blackwater-falls-state-park/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="wedding-text font-semibold hover:underline"
+                  >
+                     Blackwater Falls State Park
+                  </a>
                 </p>
+                <a 
+                  href="https://partiful.com/e/tHsCBmdS2Dq2USbPf3QF?c=SPwcD98o" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="cloud-button !h-[100px] sm:!w-[400px] mx-auto"
+                >
+                  RSVP on Partiful
+                </a>
               </div>
 
-              <Image 
-                src="/Blackwater_Falls.jpeg" 
-                width={500}
-                height={400}
-                alt="Blackwater Falls" 
-                className="w-full max-w-2xl vignette-fade mx-auto my-6 object-fill"
-              />
+              <figure className="w-full max-w-2xl mx-auto my-6">
+                <Image 
+                  src="/Blackwater_Falls.jpeg" 
+                  width={500}
+                  height={400}
+                  alt="Blackwater Falls" 
+                  className="w-full vignette-fade object-fill"
+                />
+                <figcaption className="text-center mt-2">
+                  <span className="wedding-text">water falling hard at </span>
+                  <a 
+                    href="https://wvstateparks.com/parks/blackwater-falls-state-park/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="wedding-text underline hover:no-underline"
+                  >
+                    blackwater falls state park
+                  </a>
+                </figcaption>
+              </figure>
 
 <div className="p-6">
+              <hr className="squiggly-divider my-6" />
               {/* Schedule */}
               <h2 className="text-3xl font-sans font-bold italic wedding-heading mb-4">The Plan</h2>
               
@@ -309,7 +332,7 @@ export default function Adventure() {
                   <p className="font-semibold wedding-heading mt-2">Saturday Evening ~ <span className="font-normal">5:00 P.M.</span></p>
                   <p className="italic">Group Photo, Dinner, Roast & Toast, Wigglin'</p>
                   <p>
-                    Roast 'em, toast 'em, put 'em in a stew! Roast us or toast us.</p>
+                    Roast 'em, toast 'em, put 'em in a stew!</p>
                   <p>Conference Center at Blackwater Falls Lodge</p>
                 </div>
                 
@@ -400,12 +423,12 @@ export default function Adventure() {
                   -If you choose to stay in these pre-reserved cabins, Venmo <strong>@mikalasterling</strong> (last four digits of phone number #7265). We will coordinate room arrangements.
                 </p>
                 <p>
-                  You are also welcome to handle your own lodging!
+                  You are also welcome to handle your own lodging, here are some options:
                 </p>
                   
               <div className="flex justify-start flex-wrap gap-3 mt-4">
                 <a 
-                  href="https://wvstateparks.com/park/blackwater-falls-state-park/" 
+                  href="https://wvstateparks.com/parks/blackwater-falls-state-park/lodging/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="cloud-button text-sm"
