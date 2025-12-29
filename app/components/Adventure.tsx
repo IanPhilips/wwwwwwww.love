@@ -257,7 +257,6 @@ export default function Adventure() {
                 
                 {/* Scroll indicator */}
                 <div className="flex flex-col items-center mb-4 ">
-                  <span className="text-2xl text-black sm:hidden">↓</span>
                 </div>
                
                 <p className="wedding-text font-bold mb-2 mt-4">August 20-23, 2026</p>
