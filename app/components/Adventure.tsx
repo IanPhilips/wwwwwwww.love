@@ -277,9 +277,10 @@ export default function Adventure() {
                   href="https://partiful.com/e/tHsCBmdS2Dq2USbPf3QF?c=SPwcD98o" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="cloud-button !h-[100px] sm:!w-[400px] mx-auto"
+                  className="cloud-button !w-[350px] !h-[100px] sm:!w-[400px] mx-auto relative"
                 >
                   RSVP on Partiful
+                  <span className="text-xs absolute bottom-6">(by april 1st)</span>
                 </a>
               </div>
 
