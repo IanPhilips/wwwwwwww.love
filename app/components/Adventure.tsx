@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { START_NODE_ID, STORY_NODES } from '../story-data';
+import { DEFAULT_END_NODE_ID, START_NODE_ID, STORY_NODES } from '../story-data';
 import { GameState } from '../types';
 import FlyingCherubs from './FlyingCherubs';
 
@@ -32,15 +32,15 @@ const CABIN_IMAGES = [
 
 export default function Adventure() {
   const [gameState, setGameState] = useState<GameState>({
-    currentNodeId: START_NODE_ID,
+    currentNodeId: DEFAULT_END_NODE_ID,
     history: [],
-    hasCompleted: false
+    hasCompleted: true
   });
   
   const [isClient, setIsClient] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [showCarousel, setShowCarousel] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [curtainsOpen, setCurtainsOpen] = useState(false);
   const [introHiding, setIntroHiding] = useState(false);
   const storyContainerRef = useRef<HTMLDivElement>(null);
@@ -52,12 +52,11 @@ export default function Adventure() {
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState);
-        // Validate that the saved node still exists in the story
-        if (STORY_NODES[parsed.currentNodeId]) {
-          setGameState(parsed);
-          // Skip intro if already at an ending
-          if (STORY_NODES[parsed.currentNodeId].isEnd) {
-            setShowIntro(false);
+        const savedNode = STORY_NODES[parsed.currentNodeId];
+        if (savedNode) {
+          const isMidStory = parsed.currentNodeId !== START_NODE_ID && !savedNode.isEnd;
+          if (isMidStory) {
+            setGameState(parsed);
           }
         } else {
           // Node doesn't exist (story changed), reset to start
@@ -124,16 +123,27 @@ export default function Adventure() {
     setIntroHiding(false);
   };
 
+  const handlePlayStory = () => {
+    setGameState({
+      currentNodeId: START_NODE_ID,
+      history: [],
+      hasCompleted: true
+    });
+    setShowIntro(true);
+    setCurtainsOpen(false);
+    setIntroHiding(false);
+  };
+
   const handleSkipToEnd = () => {
-    // Find the last ending in the history or default to the first ending
-    const endingNodes = Object.values(STORY_NODES).filter(node => node.isEnd);
-    if (endingNodes.length > 0) {
-      setGameState(prev => ({
-        currentNodeId: endingNodes[0].id,
-        history: [],
-        hasCompleted: true
-      }));
-    }
+    setGameState({
+      currentNodeId: DEFAULT_END_NODE_ID,
+      history: [],
+      hasCompleted: true
+    });
+    setShowIntro(false);
+    setCurtainsOpen(false);
+    setIntroHiding(false);
+    storyContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStartStory = () => {
@@ -173,7 +183,7 @@ export default function Adventure() {
       
       {/* Flying cherubs */}
       <FlyingCherubs />
-      {!showIntro && (
+      {!showIntro && !currentNode.isEnd && (
         <button
           onClick={handleRestart}
           className="text-sm z-20 absolute top-4 left-4"
@@ -182,20 +192,17 @@ export default function Adventure() {
         </button>
       )}
       <div className="max-w-4xl w-full relative z-10 ">
-     
-        {/* Header with controls */}
-        <div className="mb-6 flex justify-between items-center relative z-10">
-      
-          
-          {!showIntro && gameState.hasCompleted && !currentNode.isEnd && (
+
+        {!currentNode.isEnd && (
+          <div className="mb-6 flex justify-center items-center relative z-10">
             <button
               onClick={handleSkipToEnd}
-              className="cloud-button !min-w-[200px] text-sm mx-auto"
+              className="cloud-button !min-w-[200px] text-sm"
             >
               Skip to End
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Main story card */}
         <div ref={storyContainerRef} className={`bg-white  ${showIntro ? 'p-0' : 'sm:p-2'} rounded-2xl shadow-2xl overflow-hidden sm:max-h-[100vh] ${showIntro ? '' : 'overflow-y-auto'} ${currentNode.isEnd ? '' : 'max-h-[50vh]'}`}>
@@ -482,6 +489,15 @@ export default function Adventure() {
               </div>
 
               <hr className="squiggly-divider my-6" />
+
+              <div className="flex justify-center pb-4">
+                <button
+                  onClick={handlePlayStory}
+                  className="cloud-button !min-w-[200px] text-sm"
+                >
+                  Play the Story
+                </button>
+              </div>
 
             </div>
             </div>

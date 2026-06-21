@@ -463,3 +463,4 @@ export const STORY_NODES: Record<string, StoryNode> = {
 };
 
 export const START_NODE_ID = 'start';
+export const DEFAULT_END_NODE_ID = 'lumbago_ending';
