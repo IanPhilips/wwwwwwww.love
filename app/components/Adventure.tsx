@@ -316,42 +316,20 @@ export default function Adventure() {
               <hr className="squiggly-divider my-6" />
               {/* Schedule */}
               <h2 className="text-3xl font-sans font-bold italic wedding-heading mb-4">The Plan</h2>
-              
-              <div className="space-y-4 wedding-text">
-                <div>
-                  <p className="font-semibold wedding-heading">Thursday <span className="font-normal">4:00 P.M.</span></p>
-                  <p className="italic">Cabin Check-In</p>
-                </div>
-                
-                <div>
-                  <p className="font-semibold wedding-heading">Friday Daytime</p>
-                  <p className="italic">Hiking, River Rattin'</p>
-                  <p className="font-semibold wedding-heading mt-2">Friday Evening ~ <span className="font-normal">6:00 P.M.</span></p>
-                  <p className="italic">Dinner & Talent Show</p>
-                  <p>
-                    Songs, jokin', magic, tricks! We'll provide a variety of musical instruments.</p>
-                  <p>Conference Center at Blackwater Falls Lodge</p>
-                </div>
-                
-                <div>
-                  <p className="font-semibold wedding-heading">Saturday Daytime</p>
-                  <p className="italic">Brunch, Hiking, Hog waterin'</p>
-                  <p className="font-semibold wedding-heading mt-2">Saturday Evening ~ <span className="font-normal">5:00 P.M.</span></p>
-                  <p className="italic">Group Photo, Dinner, Roast & Toast, Wigglin'</p>
-                  <p>
-                    Roast 'em, toast 'em, put 'em in a stew!</p>
-                  <p>Conference Center at Blackwater Falls Lodge</p>
-                </div>
-                
-                <div>
-                  <p className="font-semibold wedding-heading">Sunday <span className="font-normal">10:00 A.M.</span></p>
-                  <p className="italic">Cabin Check-Out</p>
-                </div>
-              </div>
-
+              <p className="wedding-text">
+                The schedule lives on{' '}
+                <a
+                  href="https://partiful.com/e/tHsCBmdS2Dq2USbPf3QF"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="wedding-text font-semibold underline hover:no-underline"
+                >
+                  Partiful
+                </a>
+                .
+              </p>
 
               {/* Lodging */}
-              
               <div className="relative w-full max-w-xl mt-6 mx-auto mb-4 overflow-hidden rounded-lg">
                 <Image 
                   width={500}
